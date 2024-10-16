@@ -1,0 +1,32 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/SocialIcons.astro";
+
+const links = Object.entries({
+	Products: "/products/",
+	Governance: "/governance/",
+	Support: "/support/",
+	Status: "https://stats.uptimerobot.com/YwPyOHkNg2",
+	"Log in": "https://dash.axo.dev",
+});
+---
+
+<nav class="items-center hidden lg:flex mx-auto">
+	{
+		links.map(([text, href]) => (
+			<a
+				href={href}
+                class="text-primary px-4 no-underline text-[--sl-color-text]"
+			>
+				<span>{text}</span>
+			</a>
+		))
+	}
+</nav>
+<Default {...Astro.props}><slot /></Default>
+
+<style>
+	:root {
+		--sl-icon-color: var(--sl-color-text);
+	}
+</style>
