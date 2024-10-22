@@ -4,14 +4,14 @@ use std::env;
 
 use axoprocess::Cmd;
 use axoproject::WorkspaceIdx;
-use cargo_dist_schema::DistManifest;
+use cargo_dist_schema::{DistManifest, TargetTriple};
 use miette::{Context, IntoDiagnostic};
 use tracing::warn;
 
 use crate::build::BuildExpectations;
 use crate::env::{calculate_ldflags, fetch_brew_env, parse_env, select_brew_env};
 use crate::{
-    errors::*, BinaryIdx, BuildStep, CargoBuildWrapper, DistGraphBuilder, TargetTriple,
+    errors::*, BinaryIdx, BuildStep, CargoBuildWrapper, DistGraphBuilder,
     AXOUPDATER_MINIMUM_VERSION, PROFILE_DIST,
 };
 use crate::{
@@ -88,14 +88,14 @@ impl<'a> DistGraphBuilder<'a> {
             // on. Not doing that is basically rolling some dice and hoping the user already
             // has it installed, which isn't great. We should support redists eventually,
             // but for now this hacky global flag is here to let you roll dice.
-            if self.inner.config.builds.cargo.msvc_crt_static && target.contains("windows-msvc") {
+            if self.inner.config.builds.cargo.msvc_crt_static && target.is_windows_msvc() {
                 rustflags.push_str(" -Ctarget-feature=+crt-static");
             }
 
             // Likewise, the default for musl will change in the future, so
             // we can future-proof this by adding the flag now
             // See: https://github.com/axodotdev/cargo-dist/issues/486
-            if target.ends_with("linux-musl") {
+            if target.is_linux_musl() {
                 rustflags.push_str(" -Ctarget-feature=+crt-static -Clink-self-contained=yes");
             }
 
@@ -110,7 +110,7 @@ impl<'a> DistGraphBuilder<'a> {
                         target: target.clone(),
                     }));
 
-                    if target.contains("-windows-") {
+                    if target.is_windows() {
                         // If we're targetting windows, let's try `cargo-xwin`
                         wrapper = CargoBuildWrapper::Xwin;
                     } else {
@@ -212,7 +212,7 @@ pub fn build_cargo_target(
         .arg(&target.profile)
         .arg("--message-format=json-render-diagnostics")
         .arg("--target")
-        .arg(&target.target_triple)
+        .arg(target.target_triple.as_str())
         .env("RUSTFLAGS", &rustflags)
         .current_dir(&target.working_dir)
         .stdout(std::process::Stdio::piped());
@@ -286,7 +286,7 @@ pub fn rustup_toolchain(dist_graph: &DistGraph, cmd: &RustupStep) -> DistResult<
     Cmd::new(&cmd.rustup.cmd, "install rustup toolchain")
         .arg("target")
         .arg("add")
-        .arg(&cmd.target)
+        .arg(cmd.target.as_str())
         .current_dir(&dist_graph.workspace_dir)
         .run()?;
     Ok(())
