@@ -402,11 +402,11 @@ pub enum CargoBuildWrapper {
     None,
 
     /// Run 'cargo zigbuild' to cross-compile, e.g. from `x86_64-unknown-linux-gnu` to `aarch64-unknown-linux-gnu`
-    /// cf. https://github.com/rust-cross/cargo-zigbuild
+    /// cf. <https://github.com/rust-cross/cargo-zigbuild>
     ZigBuild,
 
     /// Run 'cargo xwin' to cross-compile, e.g. from `aarch64-apple-darwin` to `x86_64-pc-windows-msvc`
-    /// cf. https://github.com/rust-cross/cargo-xwin
+    /// cf. <https://github.com/rust-cross/cargo-xwin>
     Xwin,
 }
 
