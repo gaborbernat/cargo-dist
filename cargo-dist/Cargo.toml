@@ -7,12 +7,7 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 readme = "../README.md"
-exclude = [
-  "book/*",
-  "src/snapshots/*",
-  "src/tests/",
-  "tests/",
-]
+exclude = ["book/*", "src/snapshots/*", "src/tests/", "tests/"]
 
 [[bin]]
 name = "cargo-dist"
@@ -21,7 +16,11 @@ name = "cargo-dist"
 # Use bleeding edge features that might mess up people using 'cargo install'
 # with older toolchains. This is used for our prebuilt binaries.
 fear_no_msrv = ["axoprocess/stdout_to_stderr_modern"]
-tls_native_roots = ["axoasset/tls-native-roots", "gazenot/tls-native-roots", "axoupdater/tls_native_roots"]
+tls_native_roots = [
+    "axoasset/tls-native-roots",
+    "gazenot/tls-native-roots",
+    "axoupdater/tls_native_roots",
+]
 
 [dependencies]
 # Features only used by the cli
@@ -67,6 +66,7 @@ blake2.workspace = true
 serde_yml.workspace = true
 spdx.workspace = true
 base64.workspace = true
+lazy_static.workspace = true
 
 [dev-dependencies]
 insta.workspace = true
@@ -79,5 +79,5 @@ npm-package = "dist"
 
 [package.metadata.release]
 pre-release-replacements = [
-  {file="../CHANGELOG.md", search="# Unreleased", replace="# Unreleased\n\nNothing Yet!\n\n\n# Version {{version}} ({{date}})", exactly=1},
+    { file = "../CHANGELOG.md", search = "# Unreleased", replace = "# Unreleased\n\nNothing Yet!\n\n\n# Version {{version}} ({{date}})", exactly = 1 },
 ]

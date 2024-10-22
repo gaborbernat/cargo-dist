@@ -1,9 +1,5 @@
 [workspace]
-members = [
-    "axoproject",
-    "cargo-dist",
-    "cargo-dist-schema",
-]
+members = ["axoproject", "cargo-dist", "cargo-dist-schema"]
 resolver = "2"
 exclude = ["axoproject/tests/projects/"]
 
@@ -17,13 +13,23 @@ version = "0.23.0"
 [workspace.dependencies]
 # intra-workspace deps (you need to bump these versions when you cut releases too!
 cargo-dist-schema = { version = "=0.23.0", path = "cargo-dist-schema" }
-axoproject = { version = "=0.23.0", path = "axoproject", default-features = false, features = ["cargo-projects", "generic-projects", "npm-projects"] }
+axoproject = { version = "=0.23.0", path = "axoproject", default-features = false, features = [
+    "cargo-projects",
+    "generic-projects",
+    "npm-projects",
+] }
 
 # first-party deps
 axocli = { version = "0.2.0" }
 axoupdater = { version = "0.7.2" }
 axotag = "0.2.0"
-axoasset = { version = "1.0.0", features = ["json-serde", "toml-serde", "toml-edit", "compression", "remote"] }
+axoasset = { version = "1.0.0", features = [
+    "json-serde",
+    "toml-serde",
+    "toml-edit",
+    "compression",
+    "remote",
+] }
 axoprocess = { version = "0.2.0" }
 gazenot = { version = "0.3.3" }
 
@@ -43,7 +49,13 @@ semver = "1.0.23"
 newline-converter = "0.3.0"
 dialoguer = "0.11.0"
 sha2 = "0.10.6"
-minijinja = { version = "2.3.1", features = ["debug", "loader", "builtins", "json", "custom_syntax"] }
+minijinja = { version = "2.3.1", features = [
+    "debug",
+    "loader",
+    "builtins",
+    "json",
+    "custom_syntax",
+] }
 include_dir = "0.7.4"
 itertools = "0.13.0"
 cargo-wix = "0.3.8"
@@ -65,6 +77,7 @@ schemars = "0.8.21"
 serde_yml = "0.0.10"
 spdx = "0.10.6"
 base64 = "0.22.1"
+lazy_static = "1.4.0"
 
 [workspace.metadata.release]
 shared-version = true
