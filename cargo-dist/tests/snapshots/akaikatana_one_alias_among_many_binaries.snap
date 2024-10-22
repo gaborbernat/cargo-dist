@@ -1807,6 +1807,9 @@ try {
   exit 1
 }
 
+================ sha256.sum ================
+142e0662b2d165342ba462d51c6b360f0385d0ac2cd1777cead765f15b63fc5c source.tar.gz
+
 ================ dist-manifest.json ================
 {
   "dist_version": "CENSORED",
