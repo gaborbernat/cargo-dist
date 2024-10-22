@@ -465,9 +465,15 @@ pub struct ChecksumImpl {
     pub for_artifact: Option<ArtifactId>,
 }
 
-/// Create a unified checksum file, containing all available
-/// checksums (of all available styles) for all files, except
-/// for the unified checksum itself, of course.
+/// Create a unified checksum file, containing sums for
+/// all artifacts, save for the unified checksum itself,
+/// of course.
+///
+/// The result is something like `sha256.sum` which can be
+/// checked by common tools like `sha256sum -c`. Even though
+/// the type system lets each checksum have a different style,
+/// the setting is per-release so in practice they end up being
+/// the same.
 #[derive(Debug, Clone)]
 pub struct UnifiedChecksumStep {
     /// the checksum style to use
